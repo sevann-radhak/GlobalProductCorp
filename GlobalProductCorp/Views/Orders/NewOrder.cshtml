@@ -1,0 +1,86 @@
+﻿@model GlobalProductCorp.ViewModels.OrderView
+
+@{
+    ViewBag.Title = "NewOrder";
+}
+
+<h2>New Order</h2>
+
+<h3>@ViewBag.Error</h3>
+<h3>@ViewBag.Message</h3>
+
+@using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <section>
+        <div style="float: right">
+            @Html.ActionLink("Add Product", "AddProduct", new { }, new { @class = "btn btn-primary" })
+        </div>
+
+        <h2>Order Details</h2>
+
+        <table class="table" style="border: groove">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.IVAValue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Value)
+                </th>
+            </tr>
+
+            @for (int i = 0; i < Model.Products.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Products[i].Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Products[i].Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Products[i].Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Products[i].IVAValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Products[i].Value)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </section>
+
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Customer.CustomerID, "Customer", htmlAttributes: new { @class = "control -label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CustomerID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Customer.CustomerID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 60px;">
+        <div style="width: 100%; text-align: center;">
+            <input type="submit" value="Save Order" id="NewOrder" class="btn btn-success" style="margin-right: 60px;" />
+            @Html.ActionLink("Cancel", "NewOrder", null, new { @class = "btn btn-danger" })
+        </div>
+    </div>
+</div>
+}
+
